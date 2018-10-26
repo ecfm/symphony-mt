@@ -80,6 +80,7 @@ case class ExperimentConfig(
       case "iwslt17" => (languagePairs ++ evalLanguagePairs).toSeq.map(l => IWSLT17Loader(l._1, l._2, dataConfig))
       case "wmt16" => (languagePairs ++ evalLanguagePairs).toSeq.map(l => WMT16Loader(l._1, l._2, dataConfig))
       case "ted_talks" => (languagePairs ++ evalLanguagePairs).toSeq.map(l => TEDTalksLoader(l._1, l._2, dataConfig))
+      case "hw2" => (languagePairs ++ evalLanguagePairs).toSeq.map(l => HW2Loader(l._1, l._2, dataConfig))
     }, Some(workingDir))
   }
 
@@ -122,6 +123,7 @@ case class ExperimentConfig(
           case "iwslt17" => evalDatasetTags.map(t => (s"IWSLT-17/${t._1}", IWSLT17Loader.Tag.fromName(t._1), t._2))
           case "wmt16" => evalDatasetTags.map(t => (s"WMT-16/${t._1}", WMT16Loader.Tag.fromName(t._1), t._2))
           case "ted_talks" => evalDatasetTags.map(t => (s"TED-Talks/${t._1}", TEDTalksLoader.Tag.fromName(t._1), t._2))
+          case "hw2" => evalDatasetTags.map(t => (s"HW2/${t._1}", HW2Loader.Tag.fromName(t._1), t._2))
         }
         evalTags.flatMap(t => datasets.map(d => (t._1, d.filterTags(t._2), t._3)))
       case ExperimentConfig.Translate => Seq.empty
