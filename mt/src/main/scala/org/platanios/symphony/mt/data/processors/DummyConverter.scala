@@ -36,8 +36,8 @@ object DummyConverter extends FileProcessor {
   override def processPair(file1: File, file2: File, language1: Language, language2: Language): (File, File) = {
     assert(file1 == file2, "The DummyConverter converter assumes that the data for all languages is stored in the same file.")
     val textFileNamePrefix = s"${file1.nameWithoutExtension}.${language1.abbreviation}-${language2.abbreviation}"
-    val textFile1 = file1.sibling(s"$textFileNamePrefix.${language1.abbreviation}")
-    val textFile2 = file2.sibling(s"$textFileNamePrefix.${language2.abbreviation}")
+    val textFile1 = file1.sibling(s"$textFileNamePrefix.${language1.abbreviation}.txt")
+    val textFile2 = file2.sibling(s"$textFileNamePrefix.${language2.abbreviation}.txt")
     (textFile1, textFile2)
   }
 }

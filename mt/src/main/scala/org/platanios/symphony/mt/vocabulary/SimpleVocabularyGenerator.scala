@@ -71,12 +71,13 @@ class SimpleVocabularyGenerator protected (
       vocabDir: File
   ): File = {
     val vocabFile = vocabDir / filename(languages)
-    if (replaceExisting || vocabFile.notExists) {
+    if (true || vocabFile.notExists) {
       SimpleVocabularyGenerator.logger.info(s"Generating vocabulary file for ${languages.mkString(", ")}.")
       vocabFile.parent.createDirectories()
       val whitespaceRegex = "\\s+".r
       val writer = newWriter(vocabFile)
       tokenizedFiles.map(_.get).toIterator.flatMap(file => {
+        SimpleVocabularyGenerator.logger.info(s"Generating vocab for ${file}.")
         newReader(file).lines().toAutoClosedIterator
             .flatMap(whitespaceRegex.split)
       }).foldLeft(TrieWordCounter())((counter, word) => {

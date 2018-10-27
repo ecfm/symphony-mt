@@ -6,8 +6,8 @@ sbt "experiments/runMain org.platanios.symphony.mt.experiments.Experiment
   --working-dir temp/experiments
   --data-dir temp/data
   --dataset hw2
-  --language-pairs az:en,be:en,gl:en
-  --eval-datasets hw2
+  --languages az:en,be:en,gl:en
+  --eval-datasets dev:1.00
   --eval-metrics bleu
   --tokenizer none
   --cleaner moses
@@ -39,5 +39,4 @@ sbt "experiments/runMain org.platanios.symphony.mt.experiments.Experiment
   --tensorboard-host localhost
   --tensorboard-port 6006
   --num-gpus 1
-  --use-horovod false
   --seed 10"

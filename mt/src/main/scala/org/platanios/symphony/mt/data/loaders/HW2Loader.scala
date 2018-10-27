@@ -18,7 +18,7 @@ package org.platanios.symphony.mt.data.loaders
 import org.platanios.symphony.mt.Language
 import org.platanios.symphony.mt.Language._
 import org.platanios.symphony.mt.data._
-import org.platanios.symphony.mt.data.processors.{FileProcessor, TSVConverter}
+import org.platanios.symphony.mt.data.processors.{FileProcessor, DummyConverter}
 
 import better.files._
 
@@ -34,19 +34,18 @@ class HW2Loader(
                       val config: DataConfig
                     ) extends ParallelDatasetLoader(srcLanguage, tgtLanguage) {
   require(
-    TEDTalksLoader.isLanguagePairSupported(srcLanguage, tgtLanguage),
-    "The provided language pair is not supported by the TED-Talks dataset.")
+    HW2Loader.isLanguagePairSupported(srcLanguage, tgtLanguage),
+    "The provided language pair is not supported by the HW2 dataset.")
 
-  override def name: String = "TED-Talks"
+  override def name: String = "HW2"
 
   override def dataConfig: DataConfig = {
     config.copy(workingDir =
       config.workingDir
-        .resolve("ted-talks")
         .resolve(s"${srcLanguage.abbreviation}-${tgtLanguage.abbreviation}"))
   }
 
-  override def downloadsDir: Path = config.workingDir.resolve("ted-talks").resolve("downloads")
+  override def downloadsDir: Path = config.workingDir
 
   /** Sequence of files to download as part of this dataset. */
   override def filesToDownload: Seq[String] = Seq.empty
@@ -58,15 +57,15 @@ class HW2Loader(
       case Train => Seq((HW2Loader.Train,
         File(downloadsDir) / HW2Loader.filename / "train",
         File(downloadsDir) / HW2Loader.filename / "train",
-        TSVConverter))
+        DummyConverter))
       case Dev => Seq((HW2Loader.Dev,
         File(downloadsDir) / HW2Loader.filename / "dev",
         File(downloadsDir) / HW2Loader.filename / "dev",
-        TSVConverter))
+        DummyConverter))
       case Test => Seq((HW2Loader.Test,
         File(downloadsDir) / HW2Loader.filename / "test",
         File(downloadsDir) / HW2Loader.filename / "test",
-        TSVConverter))
+        DummyConverter))
     }
   }
 }
@@ -104,7 +103,7 @@ object HW2Loader {
       case "train" => Train
       case "dev" => Dev
       case "test" => Test
-      case _ => throw new IllegalArgumentException(s"'$name' is not a valid TED-Talks tag.")
+      case _ => throw new IllegalArgumentException(s"'$name' is not a valid HW2-Talks tag.")
     }
   }
 
